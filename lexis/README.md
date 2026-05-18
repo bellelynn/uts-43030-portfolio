@@ -76,7 +76,8 @@ flowchart LR
 
 The landing page surfaces key operational metrics: total cases, in-progress vs closed split, estimated revenue, and a 6-month case growth chart rendered with ECharts. All figures come directly from live database queries (`/api/cases/monthly-stats`), so the dashboard always reflects the current state of the data.
 
-![LEXIS Dashboard]
+LEXIS Dashboard
+
 <img width="451" height="298" alt="image" src="https://github.com/user-attachments/assets/61b297d0-a593-4816-94fe-c8cf40ac72dc" />
 
 
@@ -84,7 +85,8 @@ The landing page surfaces key operational metrics: total cases, in-progress vs c
 
 The Case Management view supports full-text search by case name, client, or lawyer; multi-column sorting; filter by status; and status/priority badges. Pagination handles 21+ seeded cases across multiple clients and lawyers. Every Edit action persists to PostgreSQL via the Express API — no client-side mocking.
 
-![LEXIS Case Management table]
+LEXIS Case Management table
+
 <img width="451" height="366" alt="image" src="https://github.com/user-attachments/assets/0d368191-8fdd-49f5-aa92-c3311c23f349" />
 
 
@@ -92,7 +94,8 @@ The Case Management view supports full-text search by case name, client, or lawy
 
 The CaseList React component demonstrates the front-end patterns used throughout LEXIS: functional components, multiple `useState` Hooks for local state, `useEffect` for data loading, and authenticated Axios calls against the Express back-end with graceful error handling.
 
-![CaseList React component code]
+CaseList React component code
+
 <img width="451" height="395" alt="image" src="https://github.com/user-attachments/assets/9fccee69-157c-476a-b609-d1162c3eee40" />
 
 

@@ -21,7 +21,8 @@ Pairing the theory with an applied audit was deliberate — theory on its own wo
 
 Completed all 8 sub-modules covering the IT code of ethics, privacy and data protection, intellectual property, cybersecurity and ethical hacking, emerging social implications, power and whistleblowers, and ethical thinking frameworks.
 
-![Working Ethically in the IT Industry — Canvas modules completed]
+Working Ethically in the IT Industry — Canvas modules completed
+
 <img width="451" height="243" alt="image" src="https://github.com/user-attachments/assets/371bed01-15a4-47a1-bd3e-39f151786c7d" />
 
 
@@ -29,7 +30,8 @@ Completed all 8 sub-modules covering the IT code of ethics, privacy and data pro
 
 Completed all 8 sub-modules covering Reconciliation in Australia, Reconciliation Action Plans, Indigenous Data Sovereignty, Free Prior and Informed Consent, and the Case Study: An Ethical Dilemma.
 
-![Indigenous Professional Capability — Canvas modules completed]
+Indigenous Professional Capability — Canvas modules completed
+
 <img width="451" height="263" alt="image" src="https://github.com/user-attachments/assets/a5da957c-9bb5-43a9-ad2e-bca6ef54bef5" />
 
 

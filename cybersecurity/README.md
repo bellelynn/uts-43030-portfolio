@@ -22,17 +22,15 @@ Rescoping mid-semester was uncomfortable at the time, but I'd rather show honest
 
 Enrolled in the Network Security course through UTS's Cisco Networking Academy partnership.
 
-[Cisco Networking Academy — My Learning dashboard]
-<img width="451" height="205" alt="image" src="https://github.com/user-attachments/assets/23015489-51aa-477b-9196-abb1732f7aff" />
-
+![Cisco Networking Academy — My Learning dashboard]
+<img width="451" height="205" alt="image" src="https://github.com/user-attachments/assets/64b8da64-aed6-46d4-b1a4-9a40738cdfaa" />
+)
 
 ### 2. Cisco Networking Academy — module-level completion
 
 The Network Security course is structured around 12 modules covering secure network design, access control, firewall technologies, IPS, VPN, and common attack mitigations. The screenshot below shows the later modules (9–12) covering firewall technologies, zone-based policy firewalls, and IPS — most at 95–100% completion.
 
-[Module-level completion: Firewalls and IPS]
-<img width="211" height="316" alt="image" src="https://github.com/user-attachments/assets/20e28230-de59-49a3-88b2-b9072bb24e1a" />
-
+![Module-level completion: Firewalls and IPS]
 
 **Summary by module:**
 
@@ -50,43 +48,56 @@ The Network Security course is structured around 12 modules covering secure netw
 
 ### 3. Applied to LEXIS — defensive middleware
 
-The course content has already changed how I write code. I now reason explicitly about which interfaces of the LEXIS API are network-exposed, and I added two pieces of defensive middleware to the back-end as a direct result.
+The course content has already changed how I write code. I now reason explicitly about which interfaces of the LEXIS API are network-exposed, and I added a layered set of defensive middleware to the Express back-end as a direct result.
 
-**Input validation middleware** rejects malformed JSON, oversize payloads, and suspicious content-types:
+**Body-size limits and content-type validation** — rejects malformed JSON, oversize payloads, and suspicious content-types before the request reaches any business logic:
 
-```csharp
-public class InputValidationMiddleware {
-    private readonly RequestDelegate _next;
-    private const int MaxBodySize = 1_000_000; // 1 MB
+```javascript
+// Reject anything over 1 MB
+app.use(express.json({ limit: '1mb' }));
 
-    public async Task InvokeAsync(HttpContext ctx) {
-        if (ctx.Request.ContentLength > MaxBodySize) {
-            ctx.Response.StatusCode = 413; // Payload Too Large
-            return;
+// Reject non-JSON POST/PUT
+app.use((req, res, next) => {
+    if (['POST', 'PUT'].includes(req.method)) {
+        const ct = (req.headers['content-type'] || '').toLowerCase();
+        if (!ct.startsWith('application/json')) {
+            return res.status(415).json({ error: 'Unsupported Media Type' });
         }
-        var contentType = ctx.Request.ContentType?.ToLower();
-        if (ctx.Request.Method == "POST" 
-            && !string.IsNullOrEmpty(contentType)
-            && !contentType.StartsWith("application/json")) {
-            ctx.Response.StatusCode = 415; // Unsupported Media Type
-            return;
-        }
-        await _next(ctx);
+    }
+    next();
+});
+```
+
+**JWT verification at the route boundary** — every protected route runs through this before handler logic, so no business code ever sees an unauthenticated request:
+
+```javascript
+function authenticateJWT(req, res, next) {
+    const header = req.headers.authorization;
+    if (!header?.startsWith('Bearer ')) {
+        return res.status(401).json({ error: 'Missing bearer token' });
+    }
+    try {
+        const payload = jwt.verify(header.slice(7), process.env.JWT_SECRET);
+        req.user = payload;       // { lawyerId, role, ... }
+        next();
+    } catch (err) {
+        return res.status(401).json({ error: 'Invalid or expired token' });
     }
 }
 ```
 
-**Rate-limiting middleware** uses the .NET 7+ built-in rate limiter with a fixed-window strategy (100 requests / minute / IP):
+**Per-IP rate limiting** — uses `express-rate-limit` to cap each IP at 100 requests per minute, mitigating brute-force login attempts and basic scraping:
 
-```csharp
-builder.Services.AddRateLimiter(opt => {
-    opt.AddFixedWindowLimiter("api", limiter => {
-        limiter.PermitLimit = 100;
-        limiter.Window = TimeSpan.FromMinutes(1);
-        limiter.QueueLimit = 10;
-    });
+```javascript
+import rateLimit from 'express-rate-limit';
+
+const apiLimiter = rateLimit({
+    windowMs: 60 * 1000,   // 1 minute
+    max: 100,
+    standardHeaders: true,
+    legacyHeaders: false,
 });
-app.UseRateLimiter();
+app.use('/api', apiLimiter);
 ```
 
 ### 4. Rescope note

@@ -1,18 +1,18 @@
-# Goal 2 — Foundational Cybersecurity
+# Goal 2 — Foundational cybersecurity
 
 [← Back to portfolio home](../)
 
 ## What I set out to do — and why it changed
 
-**Original plan (in my PLP):** Work through the OWASP Top 10 to build application-layer security knowledge.
+**Original plan (in my PLP):** Work through the OWASP Top 10 and refactor the login/data entry forms of my existing C#.NET Law Firm project to prevent SQL injection and implement secure password hashing.
 
 **What I actually did:** Switched to the Cisco Networking Academy's Network Security course in week 3 and stayed with it for the rest of the semester.
 
 ### Why I rescoped
 
-Three weeks into the semester, I had two informational interviews with UTS alumni working in security-adjacent roles, and read more carefully through the Australian Cyber Security Centre's Essential Eight maturity model. Both pointed the same way: **without a network-layer foundation, an application-layer view of security would leave me unable to reason about the threat model my own code actually runs inside**.
+Three weeks into the semester, I had two informational interviews with UTS alumni working in security-adjacent roles, and read more carefully through the Australian Cyber Security Centre's Essential Eight maturity model. Both pointed the same way: **without a network-layer foundation, an application-layer view of security would leave me unable to reason about the threat model my own code actually runs inside.** The OWASP Top 10 alone would have given me a vocabulary but not an architecture.
 
-Rescoping mid-semester was uncomfortable at the time, but I'd rather show honest progress against a revised plan than nominal completion of an unrealistic one. The full rescope note is below.
+Rescoping mid-semester was uncomfortable at the time, but I'd rather show honest progress against a revised plan than nominal completion of an unrealistic one. The OWASP work is still on my roadmap — it has been moved to Future Goal 2 in the Report.
 
 ---
 
@@ -24,8 +24,8 @@ Enrolled in the Network Security course through UTS's Cisco Networking Academy p
 
 Cisco Networking Academy — My Learning dashboard
 
-<img width="451" height="205" alt="image" src="https://github.com/user-attachments/assets/64b8da64-aed6-46d4-b1a4-9a40738cdfaa" />
-)
+<img width="451" height="205" alt="image" src="https://github.com/user-attachments/assets/11936cd9-0021-485f-bccd-a4c7a67dd2d9" />
+
 
 ### 2. Cisco Networking Academy — module-level completion
 
@@ -33,16 +33,16 @@ The Network Security course is structured around 12 modules covering secure netw
 
 Module-level completion: Firewalls and IPS
 
-<img width="211" height="316" alt="image" src="https://github.com/user-attachments/assets/27787bbd-02f4-4efd-b514-f7a70c5a0ad1" />
+<img width="211" height="316" alt="image" src="https://github.com/user-attachments/assets/b49f8d5b-bf97-4425-9df9-8b0f8515ff0b" />
 
 
 **Summary by module:**
 
 | Module | Topic | Completion |
 |---|---|---|
-| 1–4 | Network security fundamentals, threats, mitigations | ✅ Completed |
-| 5–6 | Network device security, AAA, access control lists | ✅ Completed |
-| 7–8 | Firewalls and firewall technologies | ✅ Completed |
+| 1–4 | Network security fundamentals, threats, mitigations | Completed |
+| 5–6 | Network device security, AAA, access control lists | Completed |
+| 7–8 | Firewalls and firewall technologies | Completed |
 | 9 | Firewall Technologies | 95% |
 | 10 | Zone-Based Policy Firewalls | 95% |
 | 11 | IPS Technologies | 97% |
@@ -106,15 +106,15 @@ app.use('/api', apiLimiter);
 
 ### 4. Rescope note
 
-**Date:** Week 3 of Autumn 2026  
-**Original goal:** Application-layer security via OWASP Top 10  
+**Date:** Week 3 of Autumn 2026
+**Original goal:** Application-layer security via OWASP Top 10 (PLP Goal 2)
 **Revised goal:** Foundational network-layer security via Cisco Network Security
 
 **Why I changed direction:**
 
 1. Two informational interviews — one with a UTS alum working at a Sydney security consultancy, one with a UTS graduate now in cloud security at a major bank — both said the same thing: graduates who jump straight to application-layer security without understanding the network layer end up making confident mistakes about threat models.
 2. The Australian Cyber Security Centre's Essential Eight framework is built around assumptions about network and host posture that I could not have evaluated without the Cisco material.
-3. The OWASP Top 10 is still on my roadmap — it sits on top of, not instead of, the foundation. See Future Goal 2 in the Report.
+3. The OWASP Top 10 is still on my roadmap — it now sits in Future Goal 2 of the Report, on top of, not instead of, the Cisco foundation.
 
 **Cost of the change:** Roughly 8 hours sunk in the original OWASP plan were not directly reused, but the threat-modelling vocabulary carried over to the Cisco course.
 

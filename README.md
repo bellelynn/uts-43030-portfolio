@@ -17,8 +17,8 @@ My target employers for this semester were **Holocentric** and **Fire Front** �
 
 ## Assessment documents
 
-- 📄 [Professional Learning Plan (Assessment 1)](./docs/plp.pdf)
-- 📄 [Professional Learning Report (Assessment 3)](./docs/report.pdf)
+- 📄 [Professional Learning Plan (Assessment 1)](./43030_A1_25744879.pdf)
+- 📄 [Professional Learning Report (Assessment 3)](./43030_A3_25744879.pdf)
 
 ---
 

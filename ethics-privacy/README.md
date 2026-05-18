@@ -21,19 +21,21 @@ Pairing the theory with an applied audit was deliberate — theory on its own wo
 
 Completed all 8 sub-modules covering the IT code of ethics, privacy and data protection, intellectual property, cybersecurity and ethical hacking, emerging social implications, power and whistleblowers, and ethical thinking frameworks.
 
-![Working Ethically in the IT Industry — Canvas modules completed](./<img width="451" height="243" alt="image" src="https://github.com/user-attachments/assets/db0d2585-c94c-43dc-bb5b-a4d4b0389e3f" />
-)
+![Working Ethically in the IT Industry — Canvas modules completed]
+<img width="451" height="243" alt="image" src="https://github.com/user-attachments/assets/371bed01-15a4-47a1-bd3e-39f151786c7d" />
+
 
 ### 2. Canvas module completion — Indigenous Professional Capability
 
 Completed all 8 sub-modules covering Reconciliation in Australia, Reconciliation Action Plans, Indigenous Data Sovereignty, Free Prior and Informed Consent, and the Case Study: An Ethical Dilemma.
 
-![Indigenous Professional Capability — Canvas modules completed](./<img width="451" height="263" alt="image" src="https://github.com/user-attachments/assets/6478ca0f-740b-4800-ba7c-3e5ee5ce5630" />
-)
+![Indigenous Professional Capability — Canvas modules completed]
+<img width="451" height="263" alt="image" src="https://github.com/user-attachments/assets/a5da957c-9bb5-43a9-ad2e-bca6ef54bef5" />
+
 
 ### 3. LEXIS privacy audit
 
-I classified every personal-data field in the LEXIS database into three categories, documenting the legal basis, retention period, and authorised role for each:
+I classified every personal-data field in the LEXIS PostgreSQL schema into three categories, documenting the legal basis, retention period, and authorised role for each:
 
 | Category | Examples | Legal basis | Retention | Authorised role |
 |---|---|---|---|---|
@@ -41,43 +43,41 @@ I classified every personal-data field in the LEXIS database into three categori
 | Matter details | case description, court documents, communications | APP 6 (use and disclosure) | 7 years post-matter close | Lawyer assigned to matter only |
 | Billing data | time entries, invoices, payment records | APP 3 + ATO record-keeping requirement | 7 years (ATO) | BillingClerk, Lawyer |
 
-**Audit findings:** the original LEXIS schema collected one field (client's preferred contact time) that was not used by any feature and was not necessary for the purpose of providing legal services. This violated the data minimisation principle of APP 3. **Action taken:** field removed from the schema; existing data dropped in the migration.
+**Audit findings:** the original LEXIS schema collected one field (client's preferred contact time) that was not used by any feature and was not necessary for the purpose of providing legal services. This violated the data minimisation principle of APP 3. **Action taken:** column dropped in a follow-up migration; existing data discarded.
 
-### 4. RBAC refactor
+### 4. RBAC pushed into the SQL layer
 
-The original LEXIS design enforced access control only at the controller layer — meaning the repository would happily return any record asked of it, and a bug or future change in the controller could silently expose data. The refactored design pushes RBAC down to the repository, where it cannot be bypassed.
+The original LEXIS design enforced access control only at the Express route handler — meaning the SQL query itself would happily return any record asked of it, and a bug or future change in the route layer could silently expose data. The refactored design pushes RBAC into the SQL query, where it cannot be bypassed even by a buggy route.
 
 **Before:**
-```csharp
-// Controller-level check only
-[Authorize(Roles = "Lawyer")]
-public async Task<IActionResult> GetCase(int id) {
-    var c = await _repo.GetByIdAsync(id);
-    return Ok(c);
-}
-
-// Repository — no scope enforcement
-public async Task<Case> GetByIdAsync(int id) {
-    return await _db.Cases.FindAsync(id);
-}
+```javascript
+// Route-handler check only
+app.get('/api/cases/:id', authenticateJWT, async (req, res) => {
+    if (req.user.role !== 'Lawyer') return res.status(403).end();
+    const { rows } = await pool.query(
+        'SELECT * FROM cases WHERE id = $1', [req.params.id]
+    );
+    res.json(rows[0]);
+});
 ```
 
 **After:**
-```csharp
-// Repository enforces user + role scope
-public async Task<Case> GetByIdAsync(int id, ClaimsPrincipal user) {
-    var userId = user.GetUserId();
-    var c = await _db.Cases
-        .Where(x => x.Id == id)
-        .Where(x => x.AssignedLawyerId == userId 
-                 || user.IsInRole("ClientManager"))
-        .FirstOrDefaultAsync();
-    if (c == null) throw new UnauthorizedAccessException();
-    return c;
-}
+```javascript
+// Route handler is thin — query itself enforces scope
+app.get('/api/cases/:id', authenticateJWT, async (req, res) => {
+    const { rows } = await pool.query(`
+        SELECT c.* 
+        FROM cases c
+        LEFT JOIN case_assignment ca ON ca.case_id = c.id
+        WHERE c.id = $1
+          AND (ca.lawyer_id = $2 OR $3 = 'ClientManager')
+    `, [req.params.id, req.user.lawyerId, req.user.role]);
+    if (!rows.length) return res.status(404).end();
+    res.json(rows[0]);
+});
 ```
 
-This pattern is now applied across every repository method in LEXIS.
+This pattern — RBAC predicates baked into the query rather than gated by the route — is now applied across every read against client or case data in LEXIS.
 
 ---
 

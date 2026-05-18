@@ -22,7 +22,8 @@ Rescoping mid-semester was uncomfortable at the time, but I'd rather show honest
 
 Enrolled in the Network Security course through UTS's Cisco Networking Academy partnership.
 
-![Cisco Networking Academy — My Learning dashboard]
+Cisco Networking Academy — My Learning dashboard
+
 <img width="451" height="205" alt="image" src="https://github.com/user-attachments/assets/64b8da64-aed6-46d4-b1a4-9a40738cdfaa" />
 )
 
@@ -30,7 +31,10 @@ Enrolled in the Network Security course through UTS's Cisco Networking Academy p
 
 The Network Security course is structured around 12 modules covering secure network design, access control, firewall technologies, IPS, VPN, and common attack mitigations. The screenshot below shows the later modules (9–12) covering firewall technologies, zone-based policy firewalls, and IPS — most at 95–100% completion.
 
-![Module-level completion: Firewalls and IPS]
+Module-level completion: Firewalls and IPS
+
+<img width="211" height="316" alt="image" src="https://github.com/user-attachments/assets/27787bbd-02f4-4efd-b514-f7a70c5a0ad1" />
+
 
 **Summary by module:**
 

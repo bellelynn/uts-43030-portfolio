@@ -24,7 +24,7 @@ My target employers for this semester were **Holocentric** and **Fire Front** �
 
 ## Three learning goals
 
-### 🎯 Goal 1 — Ethics & Privacy in Software Engineering
+### Goal 1 — Ethics & Privacy in Software Engineering
 **Gap closed:** From a legalistic, checklist understanding of privacy to an architectural one.
 
 [→ See evidence](./ethics-privacy/)
@@ -33,7 +33,7 @@ Key outputs: UTS Canvas modules on professional ethics and Indigenous data sover
 
 ---
 
-### 🔐 Goal 2 — Foundational Cybersecurity
+### Goal 2 — Foundational Cybersecurity
 **Gap closed:** From application-only OWASP knowledge to a working network-layer foundation.
 
 [→ See evidence](./cybersecurity/)
@@ -42,7 +42,7 @@ Key outputs: Cisco Networking Academy Network Security course (most modules comp
 
 ---
 
-### ⚛️ Goal 3 — Full-Stack Development on the JavaScript Ecosystem (LEXIS)
+### Goal 3 — Full-Stack Development on the JavaScript Ecosystem (LEXIS)
 **Gap closed:** From a single-language C# profile to genuine full-stack delivery on the JavaScript ecosystem.
 
 [→ See evidence](./lexis/) | [→ Source code on GitHub](https://github.com/bellelynn/case-management)

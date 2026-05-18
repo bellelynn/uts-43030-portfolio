@@ -23,9 +23,8 @@ Both build mission-critical Australian software where privacy, security, and eth
 
 ## Assessment documents
 
-- [Professional Learning Plan (Assessment 1)](./43030_A1_25744879pdf)
+- [Professional Learning Plan (Assessment 1)](./43030_A1_25744879.pdf)
 - [Professional Learning Report (Assessment 3)](./43030_A3_25744879.pdf)
-
 ---
 
 ## Three learning goals reflected on
